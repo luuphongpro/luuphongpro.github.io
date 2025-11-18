@@ -6,122 +6,60 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+# Vòng đời phát triển dựa trên AI: Tái định hình ngành kỹ thuật phần mềm
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Các nhà lãnh đạo kinh doanh và công nghệ luôn nỗ lực để nâng cao năng suất, tăng tốc độ phát triển, thúc đẩy thử nghiệm, rút ngắn thời gian đưa sản phẩm ra thị trường (TTM), và cải thiện trải nghiệm của lập trình viên. Những mục tiêu “ngôi sao dẫn đường” này thúc đẩy sự đổi mới trong các phương pháp phát triển phần mềm. Sự đổi mới này ngày càng được thúc đẩy bởi trí tuệ nhân tạo. Đặc biệt, các công cụ AI tạo sinh như [Amazon Q Developer](https://aws.amazon.com/q/developer/) và [Kiro](https://kiro.dev/) đã bắt đầu cách mạng hóa cách phần mềm được tạo ra. Hiện tại, các tổ chức đang ứng dụng AI vào phát triển phần mềm theo hai hướng chính: phát triển hỗ trợ bởi AI, nơi AI hỗ trợ các nhiệm vụ cụ thể như viết tài liệu, gợi ý mã và kiểm thử; và phát triển tự động hóa bởi AI, nơi AI được kỳ vọng tạo ra toàn bộ ứng dụng dựa trên yêu cầu người dùng mà không cần sự can thiệp của con người. Cả hai hướng tiếp cận này đều cho kết quả chưa tối ưu về tốc độ và chất lượng phần mềm — và đây chính là vấn đề mà AI-DLC đặt mục tiêu giải quyết.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+## Tại sao chúng ta cần một cách tiếp cận mang tính chuyển đổi đối với AI trong phần mềm?
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Phương pháp phát triển phần mềm hiện tại được xây dựng cho các quy trình dài hạn, do con người dẫn dắt, nơi product owner, developer và architect dành phần lớn thời gian cho các hoạt động không cốt lõi như lập kế hoạch, họp hành, và thực hiện các nghi thức trong vòng đời phát triển phần mềm (SDLC). Việc chỉ đơn thuần tích hợp AI như một trợ lý không chỉ hạn chế khả năng của nó mà còn củng cố những điểm kém hiệu quả đã lỗi thời. Để thực sự khai thác sức mạnh của AI và đạt được các mục tiêu năng suất mang tính chiến lược, chúng ta cần tái hình dung toàn bộ cách tiếp cận vòng đời phát triển phần mềm.
 
----
+Để đạt được kết quả mang tính đột phá, chúng ta cần đặt AI vào vai trò cộng tác viên và đồng đội trung tâm trong quy trình phát triển, đồng thời tận dụng khả năng của nó xuyên suốt vòng đời phần mềm. Đây là lý do chúng tôi giới thiệu [AI-Driven Development Lifecycle (AI-DLC)](https://prod.d13rzhkk8cj2z0.amplifyapp.com/) — một phương pháp mới được thiết kế nhằm tích hợp hoàn toàn khả năng của AI vào mọi khía cạnh của quá trình phát triển phần mềm.
 
-## Hướng dẫn kiến trúc
+## AI Driven Development Life Cycle (AI-DLC) là gì?
+AI-DLC là một cách tiếp cận mới trong phát triển phần mềm, lấy AI làm trung tâm và tập trung vào hai yếu tố quan trọng:
+- Thực thi được hỗ trợ bởi AI với sự giám sát của con người:
+ AI xây dựng kế hoạch làm việc chi tiết một cách có hệ thống, chủ động yêu cầu làm rõ và hướng dẫn khi cần, đồng thời chuyển các quyết định quan trọng cho con người. Điều này rất cần thiết bởi chỉ con người mới có sự hiểu biết sâu về bối cảnh và yêu cầu kinh doanh để đưa ra lựa chọn chính xác.
+- Cộng tác nhóm năng động:
+ Trong khi AI xử lý các nhiệm vụ thường xuyên và tẻ nhạt, đội ngũ con người tập trung làm việc trong môi trường cộng tác để giải quyết vấn đề theo thời gian thực, sáng tạo và đưa ra quyết định nhanh chóng. Sự chuyển dịch từ làm việc riêng lẻ sang hợp tác năng lượng cao giúp tăng tốc đổi mới và tốc độ triển khai.
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+![](/images/3-BlogsTranslated/3.2-blog2/aidlc-image01.png.png)
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+Hai yếu tố này cho phép bạn phát triển phần mềm nhanh hơn mà không phải đánh đổi chất lượng.
 
-**Kiến trúc giải pháp bây giờ như sau:**
+## AI-DLC hoạt động như thế nào?
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Cốt lõi của AI-DLC là AI bắt đầu và điều hướng quy trình làm việc thông qua một mô hình tư duy mới:
+![](/images/3-BlogsTranslated/3.2-blog2/aidlc-image02.png)
+Mô hình này hoạt động theo khuôn mẫu: AI tạo ra kế hoạch, đặt câu hỏi làm rõ để hiểu bối cảnh, và chỉ triển khai giải pháp sau khi nhận được xác nhận từ con người. Quy trình này được lặp lại liên tục cho mọi hoạt động trong vòng đời phát triển phần mềm (SDLC), giúp tạo ra một tầm nhìn thống nhất và phương pháp tiếp cận nhất quán cho tất cả các quy trình phát triển.
 
----
+Với mô hình tư duy này làm nền tảng, quá trình phát triển phần mềm trong AI-DLC diễn ra qua ba giai đoạn đơn giản:
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+- **Giai đoạn Khởi tạo (Inception):**
+AI chuyển đổi mục tiêu kinh doanh thành yêu cầu chi tiết, user stories và các đơn vị công việc thông qua “Mob Elaboration” – nơi cả nhóm cùng tham gia xác nhận câu hỏi và đề xuất của AI.
+- **Giai đoạn Xây dựng (Construction):**
+Dựa trên bối cảnh đã được xác thực ở giai đoạn Khởi tạo, AI đề xuất kiến trúc logic, mô hình miền (domain models), giải pháp mã nguồn và kiểm thử thông qua “Mob Construction” – nơi nhóm đưa ra làm rõ về các quyết định kỹ thuật và lựa chọn kiến trúc theo thời gian thực.
+- **Giai đoạn Vận hành (Operations):**
+AI sử dụng toàn bộ bối cảnh đã tích lũy từ các giai đoạn trước để quản lý hạ tầng dưới dạng mã (infrastructure as code) và triển khai hệ thống, với sự giám sát của đội ngũ.
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Mỗi giai đoạn cung cấp ngữ cảnh phong phú hơn cho giai đoạn tiếp theo, giúp AI đưa ra các đề xuất ngày càng chính xác và hiệu quả hơn.
 
----
+![](/images/3-BlogsTranslated/3.2-blog2/aidlc-image03.png)
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+AI lưu trữ và duy trì ngữ cảnh liên tục xuyên suốt các giai đoạn bằng cách lưu kế hoạch, yêu cầu và các tài liệu thiết kế vào kho dự án của bạn, giúp công việc được tiếp tục liền mạch qua nhiều phiên làm việc khác nhau.
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+AI-DLC giới thiệu thuật ngữ và nghi thức mới để phản ánh cách tiếp cận cộng tác cao và do AI dẫn dắt. Các “sprint” truyền thống được thay thế bằng “bolt” – các chu kỳ làm việc ngắn hơn, cường độ cao hơn, tính theo giờ hoặc ngày thay vì tuần; các Epics được thay thế bằng Units of Work. Sự thay đổi thuật ngữ này nhấn mạnh trọng tâm của phương pháp: tốc độ và khả năng triển khai liên tục. Tương tự, các thuật ngữ Agile quen thuộc khác cũng được tái định nghĩa để phù hợp với quy trình lấy AI làm trung tâm, tạo ra một hệ thống ngôn ngữ phản ánh đúng phương pháp đổi mới trong phát triển phần mềm này.
 
----
+## Lợi ích của phương pháp này là gì?
 
-## The pub/sub hub
+- **Tốc độ (Velocity):** Lợi ích quan trọng nhất mà AI-DLC mang lại là tăng tốc độ phát triển. AI nhanh chóng tạo và tinh chỉnh các tài liệu như yêu cầu, user stories, thiết kế, mã nguồn và kiểm thử, giúp product owner, kiến trúc sư và lập trình viên hoàn thành công việc trong vài giờ hoặc vài ngày thay vì hàng tuần như trước.
+- **Đổi mới (Innovation):** Nhờ AI đảm nhiệm phần lớn khối lượng công việc nặng, đội ngũ có thêm thời gian tập trung vào đổi mới, khám phá các giải pháp sáng tạo và mở rộng giới hạn của những gì có thể thực hiện.
+- **Chất lượng (Quality):** Thông qua việc liên tục làm rõ yêu cầu, đội ngũ xây dựng chính xác những gì họ mong muốn thay vì một phiên bản diễn giải mơ hồ của AI. Kết quả là sản phẩm phù hợp hơn với mục tiêu kinh doanh. AI nâng cao chất lượng bằng cách nhất quán áp dụng các tiêu chuẩn riêng của tổ chức — như quy tắc viết mã, mẫu thiết kế, yêu cầu bảo mật — đồng thời tạo ra bộ kiểm thử toàn diện. Tích hợp AI xuyên suốt quy trình giúp cải thiện tính thống nhất và khả năng truy vết từ yêu cầu đến triển khai.
+- **Khả năng phản ứng với thị trường (Market Responsiveness)**: Nhờ chu kỳ phát triển nhanh, AI-DLC cho phép phản hồi nhanh với nhu cầu thị trường và phản hồi của người dùng, từ đó thích ứng với yêu cầu hiệu quả hơn.
+- **Trải nghiệm lập trình viên (Developer Experience):** AI-DLC thay đổi trải nghiệm của lập trình viên bằng cách chuyển trọng tâm từ việc viết mã lặp đi lặp lại sang giải quyết các vấn đề cốt lõi. AI giảm gánh nặng nhận thức bằng cách xử lý công việc thủ công, trong khi lập trình viên có được hiểu biết sâu hơn về nghiệp vụ và thấy rõ tác động trực tiếp của công việc họ đối với giá trị kinh doanh — từ đó tăng mức độ hài lòng.
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+## Làm thế nào để bắt đầu với phương pháp này?
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+Hãy bắt đầu hành trình AI-DLC của bạn thông qua ba hướng tiếp cận rõ ràng: đọc bản [white paper chi tiết về AI-DLC](https://prod.d13rzhkk8cj2z0.amplifyapp.com/), tìm hiểu cách [Amazon Q Developer rules](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/context-project-rules.html) và [các quy trình tùy chỉnh Kiro](https://kiro.dev/docs/steering/) có thể giúp bạn triển khai AI-DLC một cách nhất quán trong tổ chức, hoặc liên hệ với đội ngũ AWS của bạn để trao đổi về cách điều chỉnh AI-DLC phù hợp với nhu cầu đặc thù của tổ chức.
 
----
-
-## Core microservice
-
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Tương lai của phát triển phần mềm đã bắt đầu. Chúng tôi rất háo hức được giúp bạn tận dụng AI không chỉ để xây dựng hệ thống nhanh hơn mà còn đảm bảo tính chính xác và chất lượng thông qua sự giám sát và cộng tác quan trọng của con người. Hãy bắt đầu hành trình AI-DLC của bạn ngay hôm nay và tham gia cộng đồng ngày càng lớn mạnh của các tổ chức đang chuyển đổi phương pháp phát triển của họ thông qua đổi mới do AI dẫn dắt.
