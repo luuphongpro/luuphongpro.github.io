@@ -14,11 +14,11 @@ pre: " <b> 1. </b> "
 
 Typically, and as a standard, a worklog is carried out over about 3 months (throughout the internship period) with weekly contents as follows:
 
-**Week 1:** [Getting familiar with AWS and basic AWS services](1.1-week1/)
+**Week 1:** [Familiarize yourself with AWS and its basic services](1.1-week1/)
 
-**Week 2:** [Doing task A...](1.2-week2/)
+**Week 2:** [Familiarize yourself with AWS VPC, network security, and advanced networking services.](1.2-week2/)
 
-**Week 3:** [Doing task B...](1.3-week3/)
+**Week 3:** [Master EC2, instances, management tools, EBS, and Auto Scaling to operate virtual machine resources on AWS.](1.3-week3/)
 
 **Week 4:** [Doing task C...](1.4-week4/)
 

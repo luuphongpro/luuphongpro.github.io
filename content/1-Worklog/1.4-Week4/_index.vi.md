@@ -5,55 +5,41 @@ weight: 1
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 4:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Hiểu về các dịch vụ lưu trữ trên AWS
+* Biết cách triển khai hệ thống Backup, thực hành Import/Export máy ảo và triển khai Storage Gateway
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Tìm hiểu Amazon Simple Storage Service (S3) với tính năng Access Point và Storage Class của S3 <br>&emsp; - Tìm hiểu S3 Static Website & CORS, Control Access, Object Key & Performance, Glacier                                           | 20/10/2025   | 20/10/2025 |<https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html> | 
+| 3   | - Tìm hiểu Snow Family, Storage Gateway, Backup <br>                | 21/10/2025   | 21/10/2025      | <https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html> |
+| 4   | - **Thực hành:** triển khai AWS Backup cho hệ thống <br>&emsp; + Tạo S3 Bucket và triển khai hạ tầng <br>&emsp; + Tạo Backup Plan, thiết lập thông báo, kiểm tra hoạt động                                                                   | 22/10/2025   | 22/10/2025      | <https://000013.awsstudygroup.com/> |
+| 5   | - **Thực hành:** Export/Import máy ảo <br>&emsp; + Chuẩn bị máy ảo <br>&emsp; + Import máy ảo vào AWS <br>&emsp; +     Export EC2 Instance từ AWS                                                              | 23/10/2025   | 23/10/2025      | <https://000014.awsstudygroup.com/> |
+| 6   | - **Thực hành:** <br>&emsp; + Triển khai file storage gateway: Tạo Storage Gateway, File Shares và kết nối File Shares ở máy On-primise <br>&emsp; + Thiết lập hệ thống lưu trữ dữ liệu chung cho hạ tầng Windows                          | 24/10/2025   | 24/10/2025      | <https://000024.awsstudygroup.com/> |
 
 
 ### Kết quả đạt được tuần 4:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
+* Hiểu Amazon Simple Storage Service (S3) là gì và nắm được các nhóm tính năng cơ bản:
+  * Amazon S3 Access Point
+  * S3 Static Website & CORS
+  * Control Access, Object Key & Performance, Glacier
+* Hiểu các dịch vụ Snow Family, Storage Gateway, Backup
+* Đã tạo và cấu hình S3 Bucket và triển khai hạ tầng, thiết lập thông báo và kiểm tra hoạt động thành công.
+* Tạo Storage Gateway, File Shares thành công và có khả năng kết nối file shares ở máy On-premise
+* Có khả năng Import máy ảo vào AWS và export EC2 Instance từ AWS
+  * Export máy ảo từ On-premise
+  * Tải máy ảo lên AWS
+  * Triển khai EC2 Instance từ AMI
+* Có khả năng export EC2 Instance từ AWS
+  * Thiết lập ACL cho S3 Bucket
+  * Export máy ảo từ EC2 Instance
+* Thiết lập hệ thống lưu trữ dữ liệu chung cho hạ tầng Windows:
+  * Tạo môi trường thực hành để tạo file share mới
+  * Kiểm tra và giám sát hiệu năng 
+  * Kích hoạt các các thành phần để có thể triển khai FSX trên Windows như: hạn ngạch bộ nhớ của người dùng, chia sẻ truy cập liên tục,...
 

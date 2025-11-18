@@ -5,122 +5,98 @@ weight: 1
 chapter: false
 pre: " <b> 3.4. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+# How Zapier runs isolated tasks on AWS Lambda and upgrades functions at scale
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+by Anton Aleksandrov, Raúl Negrón-Otero, Ankush Kalra, Vítek Urbanec, and Chandresh Patel on 25 JUL 2025 in [Advanced (300)](https://aws.amazon.com/blogs/architecture/category/learning-levels/advanced-300/), [Amazon CloudWatch](https://aws.amazon.com/blogs/architecture/category/management-tools/amazon-cloudwatch/), [Amazon Elastic Kubernetes Service](https://aws.amazon.com/blogs/architecture/category/compute/amazon-kubernetes-service/), [Architecture](https://aws.amazon.com/blogs/architecture/category/architecture/), [AWS Lambda](https://aws.amazon.com/blogs/architecture/category/compute/aws-lambda/), [Customer Solutions](https://aws.amazon.com/blogs/architecture/category/post-types/customer-solutions/), [Monitoring and observability](https://aws.amazon.com/blogs/architecture/category/management-and-governance/monitoring-and-observability/), [Serverless](https://aws.amazon.com/blogs/architecture/category/serverless/) 
 
----
+[Zapier](https://zapier.com/) is a leading no-code automation provider whose customers use their solution to automate workflows and move data across over 8,000 applications such as Slack, Salesforce, Asana, and Dropbox. Zapier runs these automations through integrations called Zaps, which are implemented using a serverless architecture running on [Amazon Web Services](https://aws.amazon.com/) (AWS). Each Zap is powered by an [AWS Lambda](https://aws.amazon.com/lambda/) fuction.
 
-## Architecture Guidance
+In this post, you’ll learn how Zapier has built their serverless architecture focusing on three key aspects: using Lambda functions to build isolated Zaps, operating over a hundred thousand Lambda functions through Zapier’s control plane infrastructure, and enhancing security posture while reducing maintenance efforts by introducing automated function upgrades and cleanup workflows into their platform architecture.
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+## Architecting a secure and isolated runtime environment
+Zaps created by Zapier’s users implement tenant-specific business logic, hence they require cross-tenant compute isolation. Code implementing one Zap can’t share an execution environment with code implementing another Zap. Moreover, the same Zap type used by two different tenants can’t share execution environments as well.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+To achieve the required level of isolation, Zapier’s engineering team adopted  [AWS Lambda](https://aws.amazon.com/lambda/), a serverless compute service that runs code in response to events and automatically manages cloud compute resources. Minimal [operational overhead](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html), [built-in high availability](https://docs.aws.amazon.com/lambda/latest/dg/security-resilience.html), [automated scaling](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html), [high level of isolation](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtime-environment.html), and [pay-per-use model](https://aws.amazon.com/lambda/pricing/) made Lambda a great fit for this use case. Currently, Zapier’s architecture is running over a hundred thousand Lambda functions to support their customer’s integration workflows
+Because they’re powered by the open source [Firecracker microVMs](https://firecracker-microvm.github.io/), each function is completely isolated from the others. Moreover, each execution environment belonging to the same function (sometimes referred to as function instances) is also isolated from other execution environments. The following architecture topology diagram uses red lines to represent isolation boundaries. Each execution environment of every function is isolated from its peers and is getting its own virtual resources such as disk, memory, and CPU. For more details, read [Security in AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-security.html).
 
-**The solution architecture is now as follows:**
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+<!-- **Kiến trúc giải pháp bây giờ như sau:** -->
 
----
+> *Image 1. *
+ 
+Zapier’s control plane is architected using [Amazon Elastic Kubernetes Service](https://aws.amazon.com/eks/) (Amazon EKS). A designated database is used to maintain the up-to-date function inventory. Whenever a user creates a new Zap, the control plane creates a corresponding Lambda function and stores a reference in the inventory database. When a Zap is triggered, the control plane retrieves information about a relevant Lambda function and invokes it to facilitate the integration workflow, as illustrated in the following diagram.
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+> *Image 2. *
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+## Understanding the runtime deprecation process
 
----
+When building architectures using the traditional non-serverless compute, cloud engineers are the ones responsible for keeping operating systems and software on their compute instances up to date and applying security and maintenance patches. With serverless architectures and Lambda functions, security patches and minor [runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) upgrades are handled by AWS automatically, which means customers can focus on delivering business value instead of the undifferentiated heavy lifting of infrastructure management.
+When a major Lambda managed runtime version reaches end-of-life, AWS initiates a [deprecation process](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy) through the [AWS Health Dashboard](https://docs.aws.amazon.com/health/latest/ug/aws-health-dashboard-status.html) and direct email communications to affected customers. Because deprecated runtimes eventually lose access to security updates and support, organizations must upgrade to supported runtime versions to avoid potential security risks. Read more about the [shared responsibility model](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtimes-shared-responsibility), [runtime use after deprecation](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-deprecation-levels), and [receiving runtime deprecation notifications](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-deprecation-notify).
 
-## Technology Choices and Communication Scope
+As Zapier’s user base and architectural complexity – and consequently the number of Zaps – were growing, keeping all functions on the most up-to-date major runtime versions became a laborious task. Top contributing factors were:
+- High number of functions. At its peak, the Zapier platform was running Zaps using hundreds of thousands of unique Lambda functions. Approximately 35% of these functions were using a runtime that was scheduled for deprecation in the next 12 months.
+  
+- Zapier architected their data plane environment to be ephemeral – the control plane creates and deletes Lambda functions on demand and manages their lifecycle dynamically. Identifying a specific owner for each affected function wasn’t always straightforward.
+  
+- Security is paramount at Zapier and upgrading affected functions runtime prior to the deprecation date was an absolute must. At no point could Zapier functions use runtimes after their deprecation date. This was a task which required extra resources.
+  
+- The upgrade process shouldn’t have had any impact on the end customer experience. At no point should customer experience be affected.
+With a short runway, high-volume workload, and the strict requirements of not impacting customer experience, Zapier’s Platform Engineering team took on this challenge of maintaining high security posture in their platform architecture.
+### Applying the solution
+The solution had three work streams:
+1. Reducing the risk by analyzing the architecture and identifying and cleaning up unused functions.
+2. Prioritizing upgrades by identifying the most critical and impactful functions.
+3. Empowering engineering teams with automated tools and knowledge to streamline the upgrade process in future.
+### Identify and clean up unused functions
+The first step in streamlining the upgrade process was identifying and removing unused functions. This reduced the total number of functions in Zapier’s architecture that required upgrades, eliminating unnecessary work for the team.
+Zapier started by augmenting the function inventory with runtime information using [AWS Trusted Advisor](https://aws.amazon.com/premiumsupport/technology/trusted-advisor/) and [Amazon Cloud Intelligence Trusted Advisor dashboards](https://catalog.workshops.aws/awscid/en-US/dashboards/advanced/trusted-advisor), as illustrated in the following diagram.
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+> *Image 3. *
 
----
+This meant the team could build a detailed inventory of functions that were running on soon-to-be deprecated runtimes. Using [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/), Zapier’s platform team started to monitor metrics such as [number of invocations](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#invocation-metrics). They identified which functions were active, which functions weren’t used for an extended period, and which functions didn’t have an active owner and could be removed.
+One of the primary mechanisms for ownership validation within the organization was using [resource tags](https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/what-are-tags.html). Functions that were active, but didn’t have clear ownership, were flagged for additional review before removal. Functions that were confirmed as unused or didn’t have an active owner were marked for deletion. Removing such functions allowed Zapier to significantly simplify their architecture and reduce the number of functions that had to be upgraded.
 
-## The Pub/Sub Hub
+## Prioritizing upgrades
+With a smaller volume of functions to upgrade, Zapier’s platform team prioritized function upgrades based on usage patterns, criticality, and potential customer impact. Three primary prioritization categories were:
+- Customer-facing functions – Any functions directly involved in executing user Zaps were marked as high priority. These had to be upgraded first to avoid service disruptions.
+  
+- Backend infrastructure functions – Internal functions that supported system operations were evaluated based on their importance to platform stability.
+  
+- High-volume functions – Functions with the highest execution frequency were prioritized because upgrading them would have the greatest impact on reducing operational risk.
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+Using these factors, Zapier’s platform team has created an upgrade roadmap, ensuring that critical assets were addressed first while minimizing potential disruptions.
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+Refer to [Retrieve data about Lambda functions that use a deprecated runtime](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-list-deprecated.html) in the Lambda Developer Guide to learn how to identify most commonly and most frequently used Lambda functions in your serverless architecture.
 
----
+## Empowering engineering teams with automated tools and knowledge
+To ensure a smooth and efficient upgrade process across their serverless architecture, Zapier’s team empowered engineering teams with clear guidelines and automated solutions. The platform incorporated two main approaches: Terraform-managed functions and a custom-built Lambda runtime canary tool. Implementing and adopting these tools and practices resulted in reducing the number of functions using soon-to-be deprecated runtimes by 95%.
+For functions managed through [infrastructure-as-code](https://aws.amazon.com/what-is/iac/) (IaC), Zapier’s team developed standardized Terraform modules that specified supported runtime versions. Development teams implemented these modules in their configurations:
+``` yaml
+resource "aws_lambda_function" "example" {
+    runtime = "python3.13"  # Updated to supported runtime
+}
+```
 
-## Core Microservice
+After applying the new module version, teams validated changes by testing the new runtime in staging environments and monitoring Terraform plan outputs to ensure proper runtime version updates.
+To efficiently manage most Lambda functions in their architecture, Zapier developed the Lambda runtime canary tool suite. Using this solution, they automated the runtime upgrade process for thousands of active Lambda functions with minimal manual intervention. The tool suite implements several key features:
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+- Architected for gradual traffic shifting with the Lambda built-in routing mechanism through function [version](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html) and [aliasing](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html). The tool can gradually shift traffic distribution from an old to a new function version. During this gradual traffic shift, the system monitors [CloudWatch metrics](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html) for errors and automatically rolls back if error rates exceed acceptable thresholds.
+  
+- Optimistic upgrade strategy implements direct upgrades for infrequently used functions using a flag value stored in a cache to detect potential issues during the first post-upgrade invocation. If this invocation fails, the control plane retries it using the previous function version. If the retried invocation succeeds, Zapier’s control plane initiates a rollback, assuming the error is most likely due to the runtime upgrade. After rollback, it will log the error and alert relevant stakeholders.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+- Integration with existing infrastructure uses an administrative interface and task queue for automated traffic shifting. A database ledger maintains tracking of function states and rollback information.
+  
+- Operational controls provide manual rollback capabilities and implement centralized control switches for process management. After a function was upgraded to a new runtime and no rollback activity was detected within a set time period, an automated pruning task cleans up older versions.
+  
+Zapier’s Lambda canary tool, through its integration of gradual traffic shifting, real-time CloudWatch monitoring, and automated rollback mechanisms, established a sustainable framework for managing runtime upgrades across their serverless architecture. This approach not only automated the upgrade process and minimized operational risks but also created a scalable solution that provides continuous runtime upgrades, preventing the use of deprecated runtimes at any point. By allowing continuous function runtime updates with minimal disruption to end user experience, Zapier maintains security and stability while requiring minimal manual intervention. This framework efficiently manages their growing serverless infrastructure, providing both security and operational efficiency for future runtime updates.
 
----
+## Conclusion
 
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+In this post, you’ve learned how Zapier architected their [software-as-a-service](https://aws.amazon.com/what-is/saas/) (SaaS) platform to provide secure, isolated execution environments using AWS Lambda and Amazon EKS, enabling their customers to create hundreds of thousands of Zaps. You’ve learned how Zapier’s team implemented the function runtime upgrade process at scale and reduced the number of functions running on soon-to-be deprecated runtimes by 95%. You’ve seen best practices that were established and techniques that helped Zapier to keep high security posture without impacting customer experience.
+Use the following links to learn more about Lambda runtimes and upgrading your functions to the latest runtime versions:
+- [Lambda runtimes documentation](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html)
+- [Retrieve data about Lambda functions that use a deprecated runtime](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-list-deprecated.html)
+- [Managing AWS Lambda runtime upgrades](https://aws.amazon.com/blogs/compute/managing-aws-lambda-runtime-upgrades/) in the AWS Compute Blog
+- [AWS Lambda runtime management controls](https://aws.amazon.com/blogs/compute/introducing-aws-lambda-runtime-management-controls/) in the AWS Compute Blog
