@@ -17,7 +17,7 @@ chapter: false
 
 &emsp; **Ngành:** Công nghệ thông tin
 
-&emsp; **Lớp:** DCT1221
+&emsp; **Lớp:** AWS092025
 
 &emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Vietnam
 
