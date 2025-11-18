@@ -5,55 +5,46 @@ weight: 1
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 8:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tích hợp bản đồ và geocoding vào hệ thống để hiển thị vị trí phòng.
+* Hoàn thiện chức năng tìm kiếm & lọc theo nhiều tiêu chí.
+* Kiểm thử toàn bộ chức năng chính trước khi chuyển sang giai đoạn tiếp theo.
+* Chuẩn bị Proposal Review (nếu cần).
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Thứ | Công việc                                                                                                                                                          | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                                             |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | --------------- | ---------------------------------------------------------- |
+| 2   | - Backend: Tích hợp **Vietmap Geocoding API** trong `roomCrud.js` để lưu tọa độ khi đăng tin <br> - Frontend: Tích hợp **Vietmap-gl** trong `RoomMap.js`          | 17/11/2025   | 17/11/2025      | https://maps.vietmap.vn/                                   |
+| 3   | - Backend: Hoàn thiện logic **lọc theo giá, quận, khoảng cách** trong `searchRooms.js`                                                                             | 18/11/2025   | 18/11/2025      | https://docs.aws.amazon.com/amazondynamodb/                |
+| 4   | - Frontend: Xây dựng trang **Search (`search/page.js`)** hoàn chỉnh với filters <br> - Hiển thị kết quả trên **bản đồ + danh sách**                               | 19/11/2025   | 19/11/2025      | https://nextjs.org/docs                                    |
+| 5   | - Kiểm thử thủ công: đăng tin (đã tích hợp tọa độ), tìm kiếm, lọc                                                             | 20/11/2025   | 20/11/2025      |                                                            |
+| 6   | - Xây dựng Proposal Review: Tổng hợp tính năng đã hoàn thành, chuẩn bị tài liệu/trình bày (nếu cần)                                                                | 21/11/2025   | 21/11/2025      |                                                            |
 
 ### Kết quả đạt được tuần 8:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Tích hợp thành công Vietmap Geocoding:  
+  * Khi đăng tin, hệ thống tự động lấy tọa độ (lat/lng).  
+  * Lưu vào DynamoDB qua Lambda.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Frontend đã hiển thị bản đồ bằng **Vietmap-gl**, có thể hiển thị vị trí phòng trên bản đồ.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Hoàn thiện chức năng tìm kiếm & lọc:
+  * Lọc theo giá  
+  * Lọc theo quận  
+  * Lọc theo khoảng cách  
+  * Tối ưu truy vấn trong Lambda `searchRooms.js`
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Trang Search đã hoàn chỉnh:
+  * Giao diện filters  
+  * Danh sách kết quả  
+  * Hiển thị vị trí trên bản đồ
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Kiểm thử:
+  * Đăng tin → lấy tọa độ → hiển thị đúng  
+  * Tìm kiếm và lọc chạy đúng logic  
+  * UI + API hoạt động đồng bộ
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Hệ thống tìm kiếm + bản đồ đã hoạt động hoàn chỉnh — **cốt lõi của ứng dụng đã chạy ổn định**.

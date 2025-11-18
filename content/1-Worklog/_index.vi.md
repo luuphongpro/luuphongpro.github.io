@@ -25,11 +25,11 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 
 **Tuần 5:** [Làm công việc D...](1.5-week5/)
 
-**Tuần 6:** [Làm công việc E...](1.6-week6/)
+**Tuần 6:** [Thiết lập Nền tảng (IaC & Design)](1.6-week6/)
 
-**Tuần 7:** [Làm công việc G...](1.7-week7/)
+**Tuần 7:** [Tích hợp Backend & Frontend MVP](1.7-week7/)
 
-**Tuần 8:** [Làm công việc H...](1.8-week8/)
+**Tuần 8:** [Search, Map & Tích hợp Dịch vụ](1.8-week8/)
 
 **Tuần 9:** [Làm công việc I...](1.9-week9/)
 
