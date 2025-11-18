@@ -17,9 +17,9 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 
 **Tuần 1:** [Làm quen với AWS và các dịch vụ cơ bản trong AWS](1.1-week1/)
 
-**Tuần 2:** [Làm công việc A...](1.2-week2/)
+**Tuần 2:** [Làm quen AWS VPC, bảo mật mạng, và các dịch vụ kết nối mạng nâng cao.](1.2-week2/)
 
-**Tuần 3:** [Làm công việc B...](1.3-week3/)
+**Tuần 3:** [Thành thạo EC2, các instance, công cụ quản lý, EBS và Auto Scaling để vận hành tài nguyên máy ảo trên AWS.](1.3-week3/)
 
 **Tuần 4:** [Làm công việc C...](1.4-week4/)
 
