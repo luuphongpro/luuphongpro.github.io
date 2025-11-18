@@ -5,55 +5,47 @@ weight: 1
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 3:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Hiểu toàn diện về Amazon EC2 và các loại instance.
+* Biết cách sử dụng AMI, tạo backup, quản lý key pair.
+* Nắm được EBS và các tính năng lưu trữ đi kèm.
+* Hiểu cơ chế Auto Scaling và khả năng mở rộng tài nguyên tự động.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Thứ | Công việc                                                                                                                                                 | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Giới thiệu Amazon EC2 <br> - Tìm hiểu EC2 Instance Types (General, Compute, Memory, Storage Optimized…)                                                | 13/10/2025   | 13/10/2025      | <https://000004.awsstudygroup.com/> |
+| 3   | - Tìm hiểu AMI (Amazon Machine Image) <br> - Backup & Restore EC2 <br> - Tạo & quản lý Key Pair                                                          | 14/10/2025   | 14/10/2025      | <https://000013.awsstudygroup.com/> |
+| 4   | - Tìm hiểu Elastic Block Store (EBS): <br> &emsp; + Volume types <br> &emsp; + Snapshot <br> &emsp; + Gắn/Tháo volume                                   | 15/10/2025   | 15/10/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 5   | - Tìm hiểu EC2 Auto Scaling: <br> &emsp; + Launch Template <br> &emsp; + Auto Scaling Group <br> &emsp; + Scaling Policies                                | 16/10/2025   | 16/10/2025      | <https://000006.awsstudygroup.com/> |
+| 6   | - Tổng hợp kiến thức EC2 <br> - Thực hành thiết lập Auto Scaling Group cơ bản                                                                             | 17/10/2025   | 17/10/2025      | <https://000006.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 3:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Hiểu rõ các khái niệm và thành phần của EC2:
+  * Instance Types và use case từng loại.
+  * On-Demand, Reserved, Spot Instances.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Làm chủ AMI:
+  * Tạo AMI từ EC2 đang chạy.
+  * Sao lưu & phục hồi từ AMI.
+  * Xử lý lỗi khi khởi tạo từ AMI.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Nắm được cơ chế quản lý Key Pair:
+  * SSH key pair.
+  * Khôi phục EC2 khi mất key pair.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Hiểu đầy đủ về EBS:
+  * Các loại volume (gp2/gp3, io1/io2, st1, sc1).
+  * Snapshot & restore.
+  * Tăng dung lượng volume.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Nắm được Auto Scaling:
+  * Tạo Launch Template.
+  * Cấu hình Auto Scaling Group.
+  * Hiểu Scaling Policies (Target Tracking, Step Scaling…).
+  * Hiểu cơ chế tăng/giảm instance tự động.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Sẵn sàng kết hợp EC2 + VPC để triển khai mô hình hạ tầng hoàn chỉnh.

@@ -5,55 +5,38 @@ weight: 1
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 7:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Triển khai hạ tầng AWS cho dự án (Lambda, API Gateway, DynamoDB).
+* Xây dựng Frontend MVP (Base UI) và hoàn thiện form đăng tin.
+* Tích hợp API giữa Frontend ↔ API Gateway ↔ Lambda ↔ DynamoDB.
+* Viết các chức năng backend cơ bản phục vụ tính năng tìm kiếm phòng.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Thứ | Công việc                                                                                                                                                                 | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                                             |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ---------------------------------------------------------- |
+| 2   | - Deployment hạ tầng AWS bằng **sam deploy** lần đầu <br> - Tạo Lambda, API Gateway, DynamoDB <br> - Thêm API Gateway Endpoint vào `frontend/.env.local`                  | 10/11/2025   | 10/11/2025      | https://cloudjourney.awsstudygroup.com/                   |
+| 3   | - Code giao diện **Layout (`layout.js`)** <br> - Code giao diện **Trang Đăng tin (`post-room/page.js`)** <br> - Cài đặt & cấu hình **Tailwind CSS**                      | 11/11/2025   | 11/11/2025      |                                                            |
+| 4   | - Viết **API Proxy** trong Next.js tại `frontend/api/proxy/`                                                                        | 12/11/2025   | 12/11/2025      | https://nextjs.org/docs                                   |
+| 5   | - Tích hợp form đăng tin: kết nối trang `post-room` với **Lambda roomCrud.js** thông qua API Proxy                                  | 13/11/2025   | 13/11/2025      | https://docs.aws.amazon.com/lambda/                       |
+| 6   | - Viết backend cho tìm kiếm phòng: tạo file **searchRooms.js** (chức năng READ – lấy tất cả phòng từ DynamoDB)                      | 14/11/2025   | 14/11/2025      | https://docs.aws.amazon.com/amazondynamodb/               |
+| 7   | - Kiểm thử toàn bộ luồng: Frontend → API Proxy → API Gateway → Lambda → DynamoDB <br> - Fix lỗi và hoàn thiện MVP                   | 15/11/2025   | 15/11/2025      |                                                            |
 
 ### Kết quả đạt được tuần 7:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
+* Triển khai hạ tầng AWS thành công bằng **sam deploy** (Lambda, DynamoDB, API Gateway).
+* Cấu hình môi trường Frontend (`.env.local`) với API Gateway Endpoint.
+* Hoàn thiện giao diện cơ bản (MVP):
+  * Layout
+  * Trang đăng tin (post-room)
+  * Tailwind CSS hoạt động ổn định
+* Viết API Proxy trong Next.js để kết nối với Lambda.
+* Tích hợp thành công form đăng tin:
+  * Gửi dữ liệu → API Proxy → API Gateway → Lambda → DynamoDB.
+* Hoàn thiện backend xử lý tìm kiếm cơ bản (`searchRooms.js` – READ).
+* Toàn bộ hệ thống đã có thể:
+  * Truy cập website
+  * Đăng tin phòng
+  * Lưu dữ liệu vào DynamoDB thành công
 

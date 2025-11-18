@@ -5,55 +5,48 @@ weight: 1
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 2:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tìm hiểu chuyên sâu về AWS VPC.
+* Hiểu các mô hình bảo mật mạng trong AWS.
+* Nắm được các dịch vụ kết nối mạng nâng cao: VPN, Direct Connect, Load Balancer.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Thứ | Công việc                                                                                                                                                                        | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Giới thiệu và tổng quan AWS VPC <br> - Tìm hiểu thành phần VPC: Subnet, Route Table, Internet Gateway, NAT Gateway                                                             | 06/10/2025   | 06/10/2025      | <https://000003.awsstudygroup.com/> |
+| 3   | - Tìm hiểu Bảo mật VPC: <br>&emsp; + Security Groups <br>&emsp; + Network ACLs <br>&emsp; + Các mô hình bảo mật Layer 3/4                                                        | 07/10/2025   | 07/10/2025      | <https://000003.awsstudygroup.com/> |
+| 4   | - Tìm hiểu các cơ chế kết nối vào VPC: <br>&emsp; + Site-to-Site VPN <br>&emsp; + Client VPN                                                                                     | 08/10/2025   | 08/10/2025      | <https://000003.awsstudygroup.com/> |
+| 5   | - Tìm hiểu AWS Direct Connect: <br>&emsp; + Kiến trúc <br>&emsp; + Lợi ích <br>&emsp; + Khi nào sử dụng Direct Connect                                                          | 09/10/2025   | 09/10/2025      | <https://000003.awsstudygroup.com/> |
+| 6   | - Tìm hiểu Elastic Load Balancer (ELB): <br>&emsp; + Classic LB <br>&emsp; + Application LB <br>&emsp; + Network LB <br> - Kiến trúc cân bằng tải trong hệ thống                | 10/10/2025   | 10/10/2025      | <https://000003.awsstudygroup.com/> |
 
 ### Kết quả đạt được tuần 2:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Nắm được kiến trúc AWS VPC gồm:
+  * Subnet (Public / Private)
+  * Route Table
+  * Internet Gateway / NAT Gateway
+  * DHCP, VPC CIDR
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Hiểu các thành phần bảo mật trong VPC:
+  * Security Group (stateful)
+  * Network ACL (stateless)
+  * Mô hình phân tầng bảo mật trong hệ thống.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Hiểu các phương thức kết nối vào VPC:
+  * Site-to-Site VPN
+  * Client VPN
+  * Ưu nhược điểm của từng loại.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Hiểu AWS Direct Connect:
+  * Kết nối vật lý chuyên dụng từ on-premises đến AWS
+  * Dùng trong hệ thống cần băng thông cao và bảo mật mạnh.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Nắm được kiến thức về Load Balancer:
+  * Application Load Balancer (layer 7)
+  * Network Load Balancer (layer 4)
+  * Kiến trúc High Availability & Fault Tolerance.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
+* Có khả năng phân tích mô hình mạng AWS và đề xuất kiến trúc phù hợp cho từng trường hợp sử dụng.
 

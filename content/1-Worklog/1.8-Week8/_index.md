@@ -5,53 +5,42 @@ weight: 1
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
+
 
 
 ### Week 8 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Integrate map display and geocoding for room locations.
+* Complete search and filtering functionality.
+* Test all major features of the system.
+* Prepare Proposal Review if required.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks for this Week:
+| Day | Tasks                                                                                                                                                  | Start Date  | Completion Date | References                                 |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ---------------- | ------------------------------------------- |
+| 2   | - Backend: Integrate **Vietmap Geocoding API** into `roomCrud.js` to store coordinates <br> - Frontend: Add **Vietmap-gl** to `RoomMap.js`              | 17/11/2025  | 17/11/2025       | https://maps.vietmap.vn/                    |
+| 3   | - Backend: Complete filtering logic (price, district, distance) in `searchRooms.js`                                                                     | 18/11/2025  | 18/11/2025       | https://docs.aws.amazon.com/amazondynamodb/ |
+| 4   | - Frontend: Build **Search Page (`search/page.js`)** with filters <br> - Display results on **map + list**                                             | 19/11/2025  | 19/11/2025       | https://nextjs.org/docs                     |
+| 5   | - Manual Testing: posting rooms (with coordinates), searching, filtering                                                                               | 20/11/2025  | 20/11/2025       |                                             |
+| 6   | - Prepare **Proposal Review**: summarize completed features & presentation materials                                                                    | 21/11/2025  | 21/11/2025       |                                             |
 
 ### Week 8 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Successfully integrated Vietmap Geocoding:
+  * Auto-fetch coordinates when users post a room  
+  * Store coordinates in DynamoDB via Lambda
+* Frontend map display using **Vietmap-gl** works smoothly.
+* Completed search and filtering:
+  * Price filter  
+  * District filter  
+  * Distance-based filter  
+  * Improved search logic in Lambda
+* Search Page completed:
+  * UI filters  
+  * Room list  
+  * Map with markers
+* Testing results:
+  * Posting → geocoding → storage works correctly  
+  * Searching & filtering functions correctly  
+  * UI + API synced across modules
+* **Final Result:** Search + Map modules are fully functional — the core of the app is now complete.

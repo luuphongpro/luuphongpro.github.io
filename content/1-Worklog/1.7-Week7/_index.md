@@ -5,53 +5,39 @@ weight: 1
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 7 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Deploy AWS infrastructure (Lambda, API Gateway, DynamoDB).
+* Build the Frontend MVP (Base UI) and the Post Room form.
+* Integrate APIs across Frontend → API Gateway → Lambda → DynamoDB.
+* Implement basic backend functions for room search.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks for this Week:
+| Day | Tasks                                                                                                                                                        | Start Date  | Completion Date | References                                 |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ---------------- | ------------------------------------------- |
+| 2   | - Deploy AWS infrastructure using **sam deploy** <br> - Create Lambda, API Gateway, DynamoDB <br> - Add API Gateway Endpoint to `frontend/.env.local`         | 10/11/2025  | 10/11/2025       | https://cloudjourney.awsstudygroup.com/     |
+| 3   | - Build UI for **Layout (`layout.js`)** <br> - Build UI for **Post Room Page (`post-room/page.js`)** <br> - Install & configure **Tailwind CSS**             | 11/11/2025  | 11/11/2025       |                                             |
+| 4   | - Implement **API Proxy** in Next.js at `frontend/api/proxy/`                                                                                                | 12/11/2025  | 12/11/2025       | https://nextjs.org/docs                     |
+| 5   | - Integrate Post Room form with **Lambda roomCrud.js** via API Proxy                                                                                         | 13/11/2025  | 13/11/2025       | https://docs.aws.amazon.com/lambda/         |
+| 6   | - Implement backend search function: create **searchRooms.js** (READ – get all rooms)                                                                        | 14/11/2025  | 14/11/2025       | https://docs.aws.amazon.com/amazondynamodb/ |
+| 7   | - Test entire flow: Frontend → API Proxy → API Gateway → Lambda → DynamoDB <br> - Fix bugs & finalize MVP                                                    | 15/11/2025  | 15/11/2025       |                                             |
 
 ### Week 7 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Successfully deployed AWS infrastructure via **sam deploy**.
+* Configured Frontend environment (`.env.local`) with API Gateway endpoint.
+* Completed base UI:
+  * Layout
+  * Post Room page
+  * Tailwind CSS working smoothly
+* Implemented API Proxy in Next.js to forward requests to Lambda.
+* Fully integrated Post Room form:
+  * Submit → API Proxy → API Gateway → Lambda → DynamoDB.
+* Completed backend search function (`searchRooms.js` – READ).
+* System successfully:
+  * Loads website
+  * Allows posting rooms
+  * Stores data in DynamoDB
 
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
