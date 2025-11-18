@@ -6,50 +6,43 @@ chapter: false
 pre: " <b> 1.1. </b> "
 ---
 
-
-
 ### Week 1 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
+* Connect and get acquainted with members in the First Cloud Journey.
 * Understand basic AWS services, how to use the console & CLI.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Tasks to be deployed this week:
+| Day | Task                                                                                                                                                                                                 | Start Date | Completion Date | Resource                              |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| Mon | - Get acquainted with FCJ members <br> - Read and note the rules and regulations at the internship unit                                                                                                   | 29/09/2025   | 29/09/2025      | |
+| Tue | - Research AWS and its service categories <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 30/09/2025   | 30/09/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Wed | - Create an AWS Free Tier account <br> - Explore AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create an AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 01/10/2025   | 01/10/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Thu | - Research basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + Security Group <br>&emsp; + ... <br> - Methods to remotely SSH into EC2 <br> - Research Elastic IP   <br>                   | 02/10/2025   | 02/10/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Fri | - **Practice:** <br>&emsp; + Create an EC2 instance (T2.micro, Amazon Linux 2, new Key Pair) <br>&emsp; + Configure **Security Group** to open SSH port <br>&emsp; + SSH connection from personal machine <br>&emsp; + Attach **EBS volume** & mount to EC2                                                                                                         | 03/10/2025   | 03/10/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
+<br>
 
-### Week 1 Achievements:
+---
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+### Week 1 Outcomes:
 
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* **Relationships:** Got acquainted and connected with the members of the **First Cloud Journey (FCJ)** group.
+* **Basic AWS Knowledge:**
+  * Understood **what AWS is** and grasped the basic service categories:
+    * Compute (**EC2**), Storage (**S3, EBS**), Networking (**VPC, Security Group**), Database (**RDS**), etc.
+* **AWS Account & Tools Practice:**
+  * Successfully created and configured an **AWS Free Tier account**.
+  * Became familiar with the **AWS Management Console** and learned how to find, access, and use services from the web interface.
+  * Installed and configured **AWS CLI** on the computer including:
+    * Default **Access Key, Secret Key, Region**.
+* **EC2 Usage:**
+  * Grasped the basic concepts of **EC2 (Instance types, AMI, EBS, Security Group)**.
+  * Successfully created an **EC2 instance** (t2.micro) and established an **SSH** connection from a personal machine.
+  * Learned how to manage and attach an **EBS volume** to the EC2 instance.
+* **AWS CLI Usage:**
+  * Used AWS CLI to perform basic operations such as:
+    * Checking account and configuration information (e.g., `aws configure list`).
+    * Getting a list of regions (e.g., `aws ec2 describe-regions`).
+    * Viewing EC2 services (e.g., `aws ec2 describe-instances`).
+    * Creating and managing key pairs.
+* **Summary:** Capable of connecting between the web interface and CLI to manage AWS resources in parallel.
