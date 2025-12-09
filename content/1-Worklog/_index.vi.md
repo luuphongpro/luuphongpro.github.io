@@ -1,7 +1,7 @@
 ---
 title: "Nhật ký công việc"
 
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 1. </b> "
 ---

@@ -6,34 +6,26 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
+**Week 1:** [Getting familiar with AWS and basic AWS services](1.1-week1/)
 
-**On this page**, you will need to introduce your worklog. **How** did you complete it? How many weeks did you take to complete the program? **What** did you do in those weeks?
+**Week 2:** [Learning AWS VPC, network security, and advanced networking services.](1.2-week2/)
 
-Typically, and as a standard, a worklog is carried out over about 3 months (throughout the internship period) with weekly contents as follows:
+**Week 3:** [Mastering EC2, instance types, management tools, EBS, and Auto Scaling for operating virtual machine resources on AWS.](1.3-week3/)
 
-**Week 1:** [Familiarize yourself with AWS and its basic services](1.1-week1/)
+**Week 4:** [Mastering AWS storage services, including Backup deployment, VM Import/Export, and using Storage Gateway.](1.4-week4/)
 
-**Week 2:** [Familiarize yourself with AWS VPC, network security, and advanced networking services.](1.2-week2/)
+**Week 5:** [Gaining solid knowledge of AWS security services (Security Hub, IAM), optimizing resources with Tags, and selecting/configuring the project architecture.](1.5-week5/)
 
-**Week 3:** [Master EC2, instances, management tools, EBS, and Auto Scaling to operate virtual machine resources on AWS.](1.3-week3/)
+**Week 6:** [Setting up Monorepo architecture, building infrastructure with AWS SAM (IaC), completing the Backend MVP for the CREATE Room function, designing mockups, and setting up basic CI/CD.](1.6-week6/)
 
-**Week 4:** [Doing task C...](1.4-week4/)
+**Week 7:** [Deploying AWS infrastructure (Lambda, API Gateway, DynamoDB), building the Frontend MVP (Base UI/Form), integrating APIs, and implementing the room search function.](1.7-week7/)
 
-**Week 5:** [Doing task D...](1.5-week5/)
+**Week 8:** [Integrating map/geocoding, completing search and filtering features, and conducting full testing of core functionalities.](1.8-week8/)
 
-**Week 6:** [Platform Setup (IaC & Design)](1.6-week6/)
+**Week 9:** [Performing task I...](1.9-week9/)
 
-**Week 7:** [Backend & Frontend MVP Integration](1.7-week7/)
+**Week 10:** [Performing task L...](1.10-week10/)
 
-**Week 8:** [Search, Map & Service Integration](1.8-week8/)
+**Week 11:** [Performing task M...](1.11-week11/)
 
-**Week 9:** [Doing task I...](1.9-week9/)
-
-**Week 10:** [Doing task L...](1.10-week10/)
-
-**Week 11:** [Doing task M...](1.11-week11/)
-
-**Week 12:** [Doing task N...](1.12-week12/)
+**Week 12:** [Performing task N...](1.12-week12/)

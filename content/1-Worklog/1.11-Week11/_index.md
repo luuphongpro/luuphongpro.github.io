@@ -1,57 +1,45 @@
 ---
-title: "Week 11 Worklog"
+title: "Worklog Week 11"
 
 weight: 2
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 11 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Improve system quality through Backend Unit Tests and Frontend E2E Tests.
+* Build a basic Data Pipeline & Business Intelligence (BI) system using AWS services.
+* Finalize and optimize the CI/CD pipeline for both Frontend and Backend.
+* Ensure system security by reviewing IAM permissions with the Least Privilege principle.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks for this Week:
+| Day | Tasks                                                                                                                                                                                       | Start Date  | Completion Date | References                                         |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ---------------- | -------------------------------------------------- |
+| 2   | - Backend Unit Tests using **Jest**: write unit tests for core Lambdas (`roomCrud.js`, `searchRooms.js`)                                                                                   | 08/12/2025  | 08/12/2025       | https://jestjs.io/                                |
+| 3   | - Frontend E2E Tests with **Cypress**: create test scenarios for 3 main flows: <br> &emsp; + Login <br> &emsp; + Search/Filter <br> &emsp; + Post Room                                     | 09/12/2025  | 09/12/2025       | https://www.cypress.io/                           |
+| 4   | - Set up **AWS Athena** on exported data from S3 <br> - Write **athena-queries.sql**: <br> &emsp; + Average rental price by District <br> &emsp; + Top 5 most viewed rooms                | 10/12/2025  | 10/12/2025       | https://docs.aws.amazon.com/athena/               |
+| 5   | - Configure **Amazon QuickSight** <br> - Build a basic dashboard to visualize Athena query results                                                                                        | 11/12/2025  | 11/12/2025       | https://docs.aws.amazon.com/quicksight/           |
+| 6   | - Optimize **deploy-frontend.yml**: Build Next.js → Upload to S3 → Invalidate CloudFront <br> - Review **IAM Permissions** for all Lambdas (Least Privilege principle)                     | 12/12/2025  | 12/12/2025       | https://docs.github.com/en/actions                |
 
 ### Week 11 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Backend Unit Tests successfully implemented for:
+  * `roomCrud.js`
+  * `searchRooms.js`
+* Frontend E2E Tests completed using Cypress for:
+  * Login
+  * Search & Filter
+  * Post Room
+* System stability improved with **minimum Test Coverage ~70%**.
+* Data Pipeline & BI successfully established:
+  * AWS Athena configured on S3-exported data.
+  * SQL queries created:
+    * Average rental price by district
+    * Top 5 most viewed rooms
+  * Amazon QuickSight dashboard created for data visualization.
+* CI/CD pipeline fully completed:
+  * Automatic deployment for Frontend (Build → S3 → CloudFront)
+  * Backend pipeline reviewed and optimized.
+* IAM permissions reviewed and restricted based on the **Least Privilege** principle.
+* **Final Result:** The system now supports automated testing, business data analytics (BI), and fully automated CI/CD for both Frontend and Backend.
