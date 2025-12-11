@@ -1,110 +1,146 @@
----
-title: "Proposal"
-
-weight: 2
-chapter: false
-pre: " <b> 2. </b> "
----
-
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+# Roommate App
+## Unified AWS Serverless Solution for Real-Time Rental Management and Roommate Matching
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+RoomMate is a platform designed to support students and landlords in searching for and managing rental rooms. The system leverages AWS Serverless architecture to optimize cost, scalability, and operational simplicity.
 
-### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
+The platform enables landlords to post listings, manage room information (create – update – delete), and receive periodic reports. Renters can search based on multiple criteria such as location, price, and amenities; save favorite rooms; and communicate directly with landlords through an integrated mini-chat feature.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+The system architecture uses **Next.js** for the frontend, **API Gateway + Lambda** for the backend, **DynamoDB** for structured data storage, along with secure authentication services. A key highlight of RoomMate is the integration of **OpenAI** to automate tasks such as sending notifications when matching rooms become available, generating analytical reports, and improving user engagement.
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+### 2. Problem Statement  
+*Current Challenges*  
+- Traditional room-searching methods (bulletin boards, social media groups) lack **advanced filtering**, have scattered information, and are often filled with spam posts.  
+- Communication between students and landlords typically relies on phone/Zalo, creating **friction** and making conversation history difficult to track.  
+- There is **no automated notification mechanism** alerting users when new rooms match their criteria.  
+- Landlords **lack analytical tools** to understand market demand and listing performance.
+
+*Solution*  
+The **RoomMate** platform provides a centralized solution for room search and rental management, integrating an internal **mini-chat** system and **automated notifications** (via n8n) based on personal preferences.
+- **AWS Serverless Architecture**: Using **API Gateway + Lambda**, DynamoDB (for rooms, users, chat), and **S3** (for images) to ensure scalability with optimized cost through the AWS Free Tier.  
+- **Key Differentiators**: Unlike generic classified or chat apps, RoomMate focuses on an enhanced rental experience with an AI chatbot recommending rooms based on personalized criteria.
+
+*Benefits & Return on Investment (ROI)*  
+- **Benefits**: Provides a highly practical solution for students. Reduces communication friction through the internal chat feature. Builds a platform with **high scalability** (easily extendable to maps, reviews). Meets all 5 core objectives of a modern tech project (serverless, CI/CD, monitoring, security, data pipeline).  
+- **ROI**: Extremely low development and operational cost thanks to AWS Free Tier (Lambda, DynamoDB, S3). Delivers a fully functional and practical product enhanced by automation and built-in chat capabilities.
 
 ### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
+The platform applies AWS Serverless architecture to build a data management and analytics system. Amazon API Gateway and AWS Lambda handle business logic processing. The web interface is delivered globally through CloudFront, acting as the single access point for both static content and API calls. Data is stored securely in Amazon S3 (for images/files) with protected buckets, while Amazon DynamoDB handles structured data. The entire deployment pipeline is fully automated via AWS CodePipeline connected to GitHub, and the system is monitored through Amazon CloudWatch.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+![Roommate App Platform Architecture](/images/2-Proposal/platform_architecture.jpg)
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+*AWS Services Used*  
+- **AWS Lambda**: Executes backend business logic.  
+- **Amazon API Gateway**: Receives, authenticates, and routes API requests to AWS Lambda.  
+- **Amazon S3**:  
+  - S3 – Frontend: Stores static web content deployed by CodePipeline.  
+  - S3 – Image Storage: Stores protected user-uploaded images/files.  
+- **Amazon DynamoDB**: Stores structured NoSQL data such as users and metadata.  
+- **AWS CodePipeline**: Automates the CI/CD deployment to S3 – Frontend and Lambda/API Gateway.  
+- **Amazon Cognito**: Handles identity management and access control for API Gateway.  
+- **Amazon CloudFront**: Global distribution of web content and routing API traffic to API Gateway.  
+- **Amazon CloudWatch**: Logging, monitoring, and alerting for the entire system.
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+*Component Design*  
+- **Frontend**: Web application hosted on S3 – Frontend and delivered globally via CloudFront.  
+- **API Layer**: API Gateway + Lambda process requests after Cognito authentication.  
+- **Data Storage**: Images/files stored in S3 – Image Storage. Structured data stored in DynamoDB.  
+- **Deployment Pipeline**: CodePipeline automates build, test, and deploy from GitHub to S3-Frontend and Lambda/API Gateway.  
+- **Security & Monitoring**: Protected S3 buckets, CloudWatch for system monitoring, Cognito for access management.
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+### 4. Technical Implementation  
+*Implementation Phases*  
+The project is deployed in four phases:
+1. **Research & Architecture Design**: Study API Gateway, Lambda, DynamoDB, S3, CloudFront, Cognito, and CodePipeline. Design the serverless multi-layer architecture (Frontend – API – Data – CI/CD).  
+2. **Cost Estimation & Feasibility**: Use AWS Pricing Calculator to estimate S3, Lambda, API Gateway, DynamoDB, and CloudFront costs. Adjust architecture based on security and cost requirements.  
+3. **Architecture Optimization & Deployment Pipeline**: Optimize the API Gateway → Lambda → DynamoDB flow, configure global CloudFront distribution, create multi-bucket S3 architecture, and refine CodePipeline.  
+4. **Development – Testing – Deployment**: Develop Lambda backend, configure API Gateway, build the web UI and upload to S3-Frontend, create DynamoDB schema, set up Cognito, implement CodePipeline, conduct end-to-end testing, and deploy to production.
 
-### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+*Technical Requirements*  
+- **Web Application & Content Delivery**  
+  - The frontend must be deployed as static build files on S3 – Frontend.  
+  - CloudFront is required for global distribution and API routing.  
+  - User images/files must be stored in S3 – Image Storage with protected access.  
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+- **API Layer & Business Logic**  
+  - All API requests must pass through API Gateway and be authenticated via Cognito.  
+  - AWS Lambda handles backend logic (CRUD, metadata, validation).  
+  - APIs must follow REST and return JSON.
 
-### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+- **Data Storage**  
+  - Structured data stored in DynamoDB with optimized Partition/Sort Key design.  
+  - Two S3 buckets required:  
+    - S3 – Frontend: web build files  
+    - S3 – Image Storage: user uploads via presigned URLs  
 
-### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+- **CI/CD & Automation**  
+  - Build–test–deploy must run via CodePipeline with GitHub source.  
+  - Pipeline deploys both frontend (S3) and backend (Lambda + API Gateway).  
+  - All changes must be logged via CloudWatch.
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+- **Security & Monitoring**  
+  - Cognito for authentication and access control.  
+  - CloudWatch for Lambda logs, API Gateway errors, and infrastructure metrics.  
+  - S3 must have “Block Public Access” enabled.  
+  - APIs must require authentication and be accessible only through CloudFront.
 
-Total: $0.7/month, $8.40/12 months
+### 5. Roadmap & Milestones  
+- **Pre-internship (Month 0)**: 1 month of system planning and evaluation.
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+- **Internship (Month 1–3)**:  
+  - **Month 1 – AWS Fundamentals**  
+    - Understand core AWS services (API Gateway, S3, Lambda, …).  
+    - Strengthen CI/CD, logging, and foundational security knowledge.  
+  - **Month 2 – Architecture Design & Refinement**  
+    - Design system architecture.  
+    - Optimize frontend hosting, backend APIs, storage, and security.  
+    - Adjust architecture based on mentor feedback and real use-cases.  
+  - **Month 3 – Deployment, Testing & Production Rollout**  
+    - Deploy AWS infrastructure based on finalized architecture.  
+    - Perform functional and performance testing.  
+    - Fix issues, optimize resource usage and cost.  
+    - Launch pilot version.
 
-### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+- **Post-deployment (1 year)**  
+  - Maintain and optimize the system.  
+  - Study advanced AWS services (Auto Scaling, WAF, CloudFormation, EKS…).  
+  - Propose improvements and new features based on real user needs.
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+### 6. Budget Estimation  
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+*Infrastructure Cost*  
+- AWS CloudFront: 0.00 USD (20–50 GB)  
+- AWS Lambda: 0.00 USD/month (50,000 requests, 100 GB compute)  
+- S3 – Frontend: 0.00 USD/month (6 GB)  
+- S3 – Image Storage: 0.35–0.6 USD/month (15–25 GB)  
+- Amazon API Gateway: 0.02 USD/month (20,000 requests)  
+- Amazon DynamoDB: 0.00 USD (<10,000 read/write, <1 GB)  
+- Amazon Cognito: 0.00 USD (<50 users)  
+- AWS CodePipeline: 0 USD (20–50 builds/month)  
+- Amazon CloudWatch Logs: 0.5–3.0 USD (2–15 GB logs)
 
-### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+**Total: 0.87–1.12 USD/month → 10.44–13.44 USD/year**
+
+### 7. Risk Assessment  
+
+*Risk Matrix*  
+- Network outage: Medium impact, medium likelihood  
+- Budget overrun: Medium impact, low likelihood  
+- Realtime chat failure: Medium impact, medium likelihood  
+- Map integration failure or expired API key: Medium impact, low likelihood  
+
+*Mitigation Strategies*  
+- Network: CloudFront for low-latency global content delivery  
+- System health: Regular monitoring  
+- Cost control: AWS budget alerts, service optimization  
+
+*Contingency Plans*  
+- Fall back to manual data collection if AWS experiences outages  
+- Use CloudFormation to restore configurations  
+- Switch to text-based address display or alternative APIs (Mapbox / OpenStreetMap)  
+- If chatbox fails, fallback to offline messages or contact form  
+
+### 8. Expected Outcomes  
+*Technical Improvements*: Real-time data and analytics replace manual workflows. Improved accuracy of AI chatbot when recommending rooms.
+
+*Long-term Value*: One year of data for AI research, reusable for future projects.
